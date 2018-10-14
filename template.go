@@ -17,7 +17,7 @@ package main
 var pkgtemplate = `# {{.PackageName}}
 {{if .Config.ShowGodocBadge}}[![GoDoc](https://godoc.org/{{.ImportPath}}?status.svg)](https://godoc.org/{{.ImportPath}}){{end}}
 {{if .Config.ShowGoReportBadge}}[![Go Report Card](https://goreportcard.com/badge/{{.ImportPath}})](https://goreportcard.com/report/{{.ImportPath}}){{end}}
-{{range .Config.CustomMarkdownBadges}}{{.}}
+{{- range .Config.CustomMarkdownBadges}}{{.}}
 {{end}}
 {{.PackageDocs}}
 {{if .ExtraMarkdown}}
