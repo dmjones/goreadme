@@ -1,4 +1,4 @@
-# main
+# goreadme
 [![GoDoc](https://godoc.org/github.com/dmjones/goreadme?status.svg)](https://godoc.org/github.com/dmjones/goreadme)
 
 
@@ -56,4 +56,4 @@ This tool leans heavily on the godoc->markdown work by Dave Cheney.
 
 
 
-<sub>*generated with [go2readme](https://github.com/dmjones/go2readme)*</sub>
+<sub>*generated with [goreadme](https://github.com/dmjones/goreadme)*</sub>

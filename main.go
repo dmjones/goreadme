@@ -25,6 +25,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path"
 	"text/template"
 
 	"github.com/BurntSushi/toml"
@@ -123,7 +124,14 @@ func getPackageDocs() (docs, name, importPath string, err error) {
 	docPkg := doc.New(pkgs[buildPkg.Name], buildPkg.ImportPath, 0)
 
 	docs = docPkg.Doc
-	name = buildPkg.Name
+
+	if buildPkg.Name == "main" {
+		// In 99% of cases, this is a tool. We want the name of the containing
+		// directory instead.
+		name = path.Base(buildPkg.ImportPath)
+	} else {
+		name = buildPkg.Name
+	}
 	importPath = buildPkg.ImportPath
 	return
 }

@@ -24,5 +24,5 @@ var pkgtemplate = `# {{.PackageName}}
 {{.ExtraMarkdown}}
 {{end}}
 {{if .Config.ShowGeneratedSuffix}}
-<sub>*generated with [go2readme](https://github.com/dmjones/go2readme)*</sub>
+<sub>*generated with [goreadme](https://github.com/dmjones/goreadme)*</sub>
 {{end}}`
