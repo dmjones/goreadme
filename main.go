@@ -16,6 +16,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 
@@ -27,6 +28,10 @@ import (
 const configFile = ".goreadme.toml"
 
 func main() {
+	if len(os.Args) > 2 {
+		log.Fatal("Usage: goreadme [out-file]")
+	}
+
 	config, err := readConfig()
 	logFatal(err, "Failed to read config")
 
@@ -36,7 +41,12 @@ func main() {
 	output, err := parse.ConvertDocs(wd, config)
 	logFatal(err, "Failed to parse package docs")
 
-	fmt.Println(output)
+	if len(os.Args) == 1 {
+		fmt.Println(output)
+	} else {
+		err = ioutil.WriteFile(os.Args[1], []byte(output), 0644)
+		logFatal(err, "Failed to write to file")
+	}
 }
 
 // readConfig reads the config file, if present, or returns the default config.

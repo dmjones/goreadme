@@ -25,7 +25,9 @@ Usage
 
 Run goreadme in your package directory and direct the output to "README.md":
 
-  goreadme > README.md
+  goreadme README.md
+
+Omitting the file name will print to stdout.
 
 Configuration
 
@@ -59,3 +61,5 @@ This tool is based on the https://github.com/davecheney/godoc2md project by Dave
 Cheney.
 */
 package main
+
+//go:generate goreadme README.md

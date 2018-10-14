@@ -15,8 +15,10 @@ Run goreadme in your package directory and direct the output to "README.md":
 
 
 ```
-goreadme > README.md
+goreadme README.md
 ```
+
+Omitting the file name will print to stdout.
 
 ### Configuration
 The behaviour of the tool can be adjusted by including a `.goreadme.toml` file
