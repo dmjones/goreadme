@@ -1,6 +1,7 @@
 # goreadme
 [![GoDoc](https://godoc.org/github.com/dmjones/goreadme?status.svg)](https://godoc.org/github.com/dmjones/goreadme)
 
+[![Build Status](https://travis-ci.com/dmjones/goreadme.svg?branch=master)](https://travis-ci.com/dmjones/goreadme)
 
 goreadme converts Go package documentation into Github-friendly markdown,
 designed to be used as a README.md file. There is support for adding badges
