@@ -39,7 +39,7 @@ those badges, just set the appropriate flags in the config file:
   showGodocBadge = true
 
   # Shows a Go report card for your package
-  showGoReportBadge = false
+  showGoReportBadge = true
 
 For others, specify the markdown in the config file:
 
@@ -51,7 +51,7 @@ For others, specify the markdown in the config file:
 Additional markdown can be specified, which will be appended to the output from
 the tool. To do this, give the name of a file containing the markdown to include.
 
-  customMarkdownFile = ""
+  customMarkdownFile = "extraInfo.md"
 
 Acknowledgments
 
