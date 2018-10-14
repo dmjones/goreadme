@@ -27,6 +27,8 @@ Run goreadme in your package directory and direct the output to "README.md":
 
   goreadme > README.md
 
+Configuration
+
 The behaviour of the tool can be adjusted by including a `.goreadme.toml` file
 in your package directory.
 
