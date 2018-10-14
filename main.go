@@ -15,59 +15,38 @@
 package main
 
 import (
-	"bytes"
-	"errors"
-	"go/ast"
-	"go/build"
-	"go/doc"
-	"go/parser"
-	"go/token"
-	"io/ioutil"
+	"fmt"
 	"log"
 	"os"
-	"path"
-	"text/template"
+
+	"github.com/dmjones/goreadme/parse"
 
 	"github.com/BurntSushi/toml"
 )
 
 const configFile = ".goreadme.toml"
 
-type config struct {
-	FencedCodeLanguage   string
-	ShowGeneratedSuffix  bool
-	ShowGodocBadge       bool
-	ShowGoReportBadge    bool
-	CustomMarkdownBadges []string
-	CustomMarkdownFile   string
-}
-
-func defaultConfig() *config {
-	return &config{
-		FencedCodeLanguage:   "go",
-		ShowGeneratedSuffix:  true,
-		ShowGodocBadge:       true,
-		ShowGoReportBadge:    false,
-		CustomMarkdownBadges: nil,
-		CustomMarkdownFile:   "",
-	}
-}
-
 func main() {
 	config, err := readConfig()
 	logFatal(err, "Failed to read config")
 
-	err = parse(config)
+	wd, err := os.Getwd()
+	logFatal(err, "Failed to get directory info")
+
+	output, err := parse.ConvertDocs(wd, config)
 	logFatal(err, "Failed to parse package docs")
+
+	fmt.Println(output)
 }
 
-func readConfig() (*config, error) {
+// readConfig reads the config file, if present, or returns the default config.
+func readConfig() (*parse.Config, error) {
 	if _, err := os.Stat(configFile); os.IsNotExist(err) {
-		return defaultConfig(), nil
+		return parse.DefaultConfig(), nil
 	}
 
 	// Begin with default config. User can then overwrite what they want.
-	c := defaultConfig()
+	c := parse.DefaultConfig()
 	_, err := toml.DecodeFile(configFile, c)
 
 	if err != nil {
@@ -75,112 +54,6 @@ func readConfig() (*config, error) {
 	}
 
 	return c, nil
-}
-
-func readExtraMarkdown(file string) (string, error) {
-	bytes, err := ioutil.ReadFile(file)
-	if err != nil {
-		return "", err
-	}
-
-	return string(bytes), nil
-}
-
-func getPackageDocs() (docs, name, importPath string, err error) {
-	var wd string
-	wd, err = os.Getwd()
-	if err != nil {
-		return
-	}
-
-	var buildPkg *build.Package
-	buildPkg, err = build.ImportDir(wd, build.ImportComment)
-	if err != nil {
-		return
-	}
-
-	fs := token.NewFileSet()
-
-	filter := func(info os.FileInfo) bool {
-		for _, name := range buildPkg.GoFiles {
-			if name == info.Name() {
-				return true
-			}
-		}
-		return false
-	}
-
-	var pkgs map[string]*ast.Package
-	pkgs, err = parser.ParseDir(fs, buildPkg.Dir, filter, parser.ParseComments)
-	if err != nil {
-		return
-	}
-
-	if len(pkgs) != 1 {
-		err = errors.New("multiple packages found in directory")
-		return
-	}
-
-	docPkg := doc.New(pkgs[buildPkg.Name], buildPkg.ImportPath, 0)
-
-	docs = docPkg.Doc
-
-	if buildPkg.Name == "main" {
-		// In 99% of cases, this is a tool. We want the name of the containing
-		// directory instead.
-		name = path.Base(buildPkg.ImportPath)
-	} else {
-		name = buildPkg.Name
-	}
-	importPath = buildPkg.ImportPath
-	return
-}
-
-func parse(c *config) error {
-
-	// Read additional markdown file, if present in config
-	var customMarkdown string
-	if c.CustomMarkdownFile != "" {
-		var err error
-		customMarkdown, err = readExtraMarkdown(c.CustomMarkdownFile)
-		if err != nil {
-			return err
-		}
-	}
-
-	packageDocs, packageName, importPath, err := getPackageDocs()
-	if err != nil {
-		return err
-	}
-
-	var buf bytes.Buffer
-	ToMD(&buf, packageDocs, c.FencedCodeLanguage)
-	markdownDocs := buf.String()
-
-	tmpl, err := template.New("").Parse(pkgtemplate)
-	if err != nil {
-		return err
-	}
-
-	err = tmpl.Execute(os.Stdout, struct {
-		PackageName   string
-		ImportPath    string
-		PackageDocs   string
-		ExtraMarkdown string
-		Config        *config
-	}{
-		PackageName:   packageName,
-		ImportPath:    importPath,
-		PackageDocs:   markdownDocs,
-		ExtraMarkdown: customMarkdown,
-		Config:        c,
-	})
-
-	if err != nil {
-		return err
-	}
-
-	return nil
 }
 
 func logFatal(err error, msg string) {

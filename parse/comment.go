@@ -4,7 +4,7 @@
 //
 // Minor edits by Duncan Jones and subject to LICENSE file.
 
-package main
+package parse
 
 import (
 	"io"

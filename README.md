@@ -54,7 +54,4 @@ customMarkdownFile = ""
 This tool is based on the <a href="https://github.com/davecheney/godoc2md">https://github.com/davecheney/godoc2md</a> project by Dave
 Cheney.
 
-
-
-
 <sub>*generated with [goreadme](https://github.com/dmjones/goreadme)*</sub>

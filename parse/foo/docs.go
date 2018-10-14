@@ -12,17 +12,18 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-package main
+/*
+We don't use the 'testdata' package, as this messes up the import paths reported
+by the docs tools.
 
-var pkgtemplate = `# {{.PackageName}}
-{{if .Config.ShowGodocBadge}}[![GoDoc](https://godoc.org/{{.ImportPath}}?status.svg)](https://godoc.org/{{.ImportPath}}){{end}}
-{{if .Config.ShowGoReportBadge}}[![Go Report Card](https://goreportcard.com/badge/{{.ImportPath}})](https://goreportcard.com/report/{{.ImportPath}}){{end}}
-{{- range .Config.CustomMarkdownBadges}}{{.}}
-{{end}}
-{{.PackageDocs}}
-{{if .ExtraMarkdown}}
-{{.ExtraMarkdown}}
-{{end}}
-{{if .Config.ShowGeneratedSuffix}}
-<sub>*generated with [goreadme](https://github.com/dmjones/goreadme)*</sub>
-{{end}}`
+This is a heading
+
+Here is some text after the heading. Another sentence here too.
+
+  func someCode() {
+    fmt.Println("Hello, world!")
+  }
+
+The last sentence is here.
+*/
+package foo
