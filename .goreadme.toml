@@ -3,6 +3,9 @@
 # There is no Go code examples in the docs, so use defaults.
 fencedCodeLanguage = ""
 
+# More badges are more fun
+showGoReportBadge = true
+
 customMarkdownBadges = [
   "[![Build Status](https://travis-ci.com/dmjones/goreadme.svg?branch=master)](https://travis-ci.com/dmjones/goreadme)"
 ]
