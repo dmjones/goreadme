@@ -25,10 +25,10 @@ those badges, just set the appropriate flags in the config file:
 
 
 ```
-# Shows a godoc badge for your package (<a href="https://godoc.org">https://godoc.org</a>)
+# Shows a godoc badge for your package
 showGodocBadge = true
 
-# Shows a Go report card for your package (<a href="https://goreportcard.com">https://goreportcard.com</a>)
+# Shows a Go report card for your package
 showGoReportBadge = false
 ```
 
@@ -37,8 +37,8 @@ For others, specify the markdown in the config file:
 
 ```
 customMarkdownBadges = [
-  "[![Coverage Status](<a href="https://link/to/badge.svg">https://link/to/badge.svg</a>)](<a href="https://link/to/data">https://link/to/data</a>)",
-  "[![Build Status](<a href="https://link/to/badge.svg">https://link/to/badge.svg</a>)](<a href="https://link/to/data">https://link/to/data</a>)",
+  "[![Coverage Status](...)](...)",
+  "[![Build Status](...)](...)",
 ]
 ```
 

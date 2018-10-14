@@ -33,17 +33,17 @@ in your package directory.
 Some badges are supported directly by the tool (PRs welcome for others). For
 those badges, just set the appropriate flags in the config file:
 
-  # Shows a godoc badge for your package (https://godoc.org)
+  # Shows a godoc badge for your package
   showGodocBadge = true
 
-  # Shows a Go report card for your package (https://goreportcard.com)
+  # Shows a Go report card for your package
   showGoReportBadge = false
 
 For others, specify the markdown in the config file:
 
   customMarkdownBadges = [
-    "[![Coverage Status](https://link/to/badge.svg)](https://link/to/data)",
-    "[![Build Status](https://link/to/badge.svg)](https://link/to/data)",
+    "[![Coverage Status](...)](...)",
+    "[![Build Status](...)](...)",
   ]
 
 Additional markdown can be specified, which will be appended to the output from
