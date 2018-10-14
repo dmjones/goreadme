@@ -53,6 +53,7 @@ the tool. To do this, give the name of a file containing the markdown to include
 
 Acknowledgments
 
-This tool leans heavily on the godoc->markdown work by Dave Cheney.
+This tool is based on the https://github.com/davecheney/godoc2md project by Dave
+Cheney.
 */
 package main

@@ -51,7 +51,8 @@ customMarkdownFile = ""
 ```
 
 ### Acknowledgments
-This tool leans heavily on the godoc->markdown work by Dave Cheney.
+This tool is based on the <a href="https://github.com/davecheney/godoc2md">https://github.com/davecheney/godoc2md</a> project by Dave
+Cheney.
 
 
 
