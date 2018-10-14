@@ -1,0 +1,4 @@
+# This is the config file used to generate the README for the project.
+
+# There is no Go code examples in the docs, so use defaults.
+fencedCodeLanguage = ""
