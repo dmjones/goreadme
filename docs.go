@@ -19,7 +19,17 @@ for documentation and build status.
 
 Installation
 
-TODO (need to configure goreleaser)
+The recommended way to install is to download a binary from
+https://github.com/dmjones/goreadme/releases.
+
+If you'd like to build from the latest master commit instead, you must first
+install `dep`: https://golang.github.io/dep/docs/installation.html. Then
+run these commands:
+
+  go get -d github.com/dmjones/goreadme
+  cd "$GOPATH/src/github.com/dmjones/goreadme"
+  dep ensure --vendor-only
+  go install .
 
 Usage
 

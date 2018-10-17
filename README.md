@@ -8,7 +8,20 @@ designed to be used as a README.md file. There is support for adding badges
 for documentation and build status.
 
 ### Installation
-TODO (need to configure goreleaser)
+The recommended way to install is to download a binary from
+<a href="https://github.com/dmjones/goreadme/releases">https://github.com/dmjones/goreadme/releases</a>.
+
+If you'd like to build from the latest master commit instead, you must first
+install `dep`: <a href="https://golang.github.io/dep/docs/installation.html">https://golang.github.io/dep/docs/installation.html</a>. Then
+run these commands:
+
+
+```
+go get -d github.com/dmjones/goreadme
+cd "$GOPATH/src/github.com/dmjones/goreadme"
+dep ensure --vendor-only
+go install .
+```
 
 ### Usage
 Run goreadme in your package directory and direct the output to "README.md":
