@@ -15,15 +15,16 @@
 /*
 goreadme converts Go package documentation into Github-friendly markdown,
 designed to be used as a README.md file. There is support for adding badges
-for documentation and build status.
+for documentation and build status. The README.md for this project is generated
+using this tool.
 
 Installation
 
-The recommended way to install is to download a binary from
+It is recommended to download a binary from
 https://github.com/dmjones/goreadme/releases.
 
-If you'd like to build from the latest master commit instead, you must first
-install `dep`: https://golang.github.io/dep/docs/installation.html. Then
+If you'd like to build from the latest source you must first
+install dep (https://golang.github.io/dep/docs/installation.html). Then
 run these commands:
 
   go get -d github.com/dmjones/goreadme
