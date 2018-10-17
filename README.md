@@ -3,10 +3,17 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/dmjones/goreadme)](https://goreportcard.com/report/github.com/dmjones/goreadme)
 [![Build Status](https://travis-ci.com/dmjones/goreadme.svg?branch=master)](https://travis-ci.com/dmjones/goreadme)
 
-goreadme converts Go package documentation into Github-friendly markdown,
-designed to be used as a README.md file. There is support for adding badges
-for documentation and build status. The README.md for this project is generated
-using this tool.
+goreadme converts Go package documentation into a README.md file. This
+avoids duplicating effort when writing docs and generally results in more
+detailed Go package documentation. Win, win!
+
+The Go documentation is parsed and converted into markdown. Build status badges
+or documentation links can be added automatically and additional markdown can
+be appended to the end of the file if needed.
+
+The README.md for this project is generated using this tool. See `docs.go` for
+the source material and `.goreadme.toml` for the configuration. More details on
+these below.
 
 ### Installation
 It is recommended to download a binary from
