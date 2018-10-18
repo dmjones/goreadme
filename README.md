@@ -2,6 +2,7 @@
 [![GoDoc](https://godoc.org/github.com/dmjones/goreadme?status.svg)](https://godoc.org/github.com/dmjones/goreadme)
 [![Go Report Card](https://goreportcard.com/badge/github.com/dmjones/goreadme)](https://goreportcard.com/report/github.com/dmjones/goreadme)
 [![Build Status](https://travis-ci.com/dmjones/goreadme.svg?branch=master)](https://travis-ci.com/dmjones/goreadme)
+[![Coverage Status](https://coveralls.io/repos/github/dmjones/goreadme/badge.svg?branch=master)](https://coveralls.io/github/dmjones/goreadme?branch=master)
 
 goreadme converts Go package documentation into a README.md file. This
 avoids duplicating effort when writing docs and generally results in more
