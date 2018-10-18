@@ -3,9 +3,6 @@
 # There is no Go code examples in the docs, so use defaults.
 fencedCodeLanguage = ""
 
-# More badges are more fun
-showGoReportBadge = true
-
 customMarkdownBadges = [
   "[![Build Status](https://travis-ci.com/dmjones/goreadme.svg?branch=master)](https://travis-ci.com/dmjones/goreadme)",
   "[![Coverage Status](https://coveralls.io/repos/github/dmjones/goreadme/badge.svg?branch=master)](https://coveralls.io/github/dmjones/goreadme?branch=master)"
