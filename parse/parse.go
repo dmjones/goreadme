@@ -16,7 +16,6 @@ package parse
 
 import (
 	"bytes"
-	"errors"
 	"go/ast"
 	"go/build"
 	"go/doc"
@@ -30,12 +29,12 @@ import (
 )
 
 func readExtraMarkdown(file string) (string, error) {
-	bytes, err := ioutil.ReadFile(file)
+	b, err := ioutil.ReadFile(file)
 	if err != nil {
 		return "", err
 	}
 
-	return string(bytes), nil
+	return string(b), nil
 }
 
 func getPackageDocs(packageDir string) (docs, name, importPath string, err error) {
@@ -62,13 +61,7 @@ func getPackageDocs(packageDir string) (docs, name, importPath string, err error
 		return
 	}
 
-	if len(pkgs) != 1 {
-		err = errors.New("multiple packages found in directory")
-		return
-	}
-
 	docPkg := doc.New(pkgs[buildPkg.Name], buildPkg.ImportPath, 0)
-
 	docs = docPkg.Doc
 
 	if buildPkg.Name == "main" {

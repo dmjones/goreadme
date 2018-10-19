@@ -82,7 +82,7 @@ func TestGoReport(t *testing.T) {
 }
 
 func runConfigTest(t *testing.T, config *Config, expectedFile string) {
-	tmpDir := copyTestFileToGoPath(t, "foo/docs.go")
+	tmpDir := copyTestFileToGoPath(t, "foo/docs.go", "")
 	defer os.RemoveAll(tmpDir)
 
 	expectedBytes, err := ioutil.ReadFile(expectedFile)
@@ -111,7 +111,7 @@ func TestBadExtraMarkdownReturnsError(t *testing.T) {
 
 func TestMainPackagesTreatedAsCommands(t *testing.T) {
 
-	tmpDir := copyTestFileToGoPath(t, "bar/docs.go")
+	tmpDir := copyTestFileToGoPath(t, "bar/docs_main.go", "")
 	defer os.RemoveAll(tmpDir)
 
 	res, err := ConvertDocs(tmpDir, &Config{
@@ -126,13 +126,38 @@ func TestMainPackagesTreatedAsCommands(t *testing.T) {
 	assert.Equal(t, expected, res)
 }
 
+func TestMultiplePackagesCausesError(t *testing.T) {
+	tmpDir := copyTestFileToGoPath(t, "bar/docs_main.go", "")
+	defer os.RemoveAll(tmpDir)
+
+	copyTestFileToGoPath(t, "foo/docs.go", tmpDir)
+
+	_, err := ConvertDocs(tmpDir, DefaultConfig())
+	assert.Error(t, err)
+}
+
+func TestExtraFilesCauseNoErrors(t *testing.T) {
+	tmpDir := copyTestFileToGoPath(t, "foo/docs.go", "")
+	defer os.RemoveAll(tmpDir)
+
+	// Copy a random file in there too
+	copyTestFileToGoPath(t, "extra.md", tmpDir)
+
+	_, err := ConvertDocs(tmpDir, DefaultConfig())
+	assert.NoError(t, err)
+}
+
 // copyTestFileToGoPath copies testFile from the testdata directory into a
 // random temporary directory in the GOPATH. The returned string is the
 // directory that was created. The caller should delete it when finished.
-func copyTestFileToGoPath(t *testing.T, testFile string) string {
+// To use an existing temp dir, pass a non-empty string as tmpDir.
+func copyTestFileToGoPath(t *testing.T, testFile, tmpDir string) string {
 
-	tmpDir, err := ioutil.TempDir(path.Join(build.Default.GOPATH, "src"), "goreadme")
-	require.NoError(t, err)
+	var err error
+	if tmpDir == "" {
+		tmpDir, err = ioutil.TempDir(path.Join(build.Default.GOPATH, "src"), "goreadme")
+		require.NoError(t, err)
+	}
 
 	wd, err := os.Getwd()
 	require.NoError(t, err)
