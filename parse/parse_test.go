@@ -15,8 +15,12 @@
 package parse
 
 import (
+	"fmt"
+	"go/build"
 	"io/ioutil"
 	"os"
+	"path"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -78,14 +82,67 @@ func TestGoReport(t *testing.T) {
 }
 
 func runConfigTest(t *testing.T, config *Config, expectedFile string) {
-	wd, err := os.Getwd()
-	require.NoError(t, err)
+	tmpDir := copyTestFileToGoPath(t, "foo/docs.go")
+	defer os.RemoveAll(tmpDir)
 
 	expectedBytes, err := ioutil.ReadFile(expectedFile)
 	require.NoError(t, err)
 
-	out, err := ConvertDocs(wd+"/foo", config)
+	importPath := path.Base(tmpDir)
+	expected := strings.Replace(string(expectedBytes), "%%IMPORT_PATH%%", importPath, -1)
+
+	out, err := ConvertDocs(tmpDir, config)
 
 	assert.NoError(t, err)
-	assert.Equal(t, string(expectedBytes), out)
+	assert.Equal(t, expected, out)
+}
+
+func TestBadExtraMarkdownReturnsError(t *testing.T) {
+	wd, err := os.Getwd()
+	require.NoError(t, err)
+
+	config := &Config{
+		CustomMarkdownFile: "doesn't exist",
+	}
+
+	_, err = ConvertDocs(wd+"/foo", config)
+	assert.Error(t, err)
+}
+
+func TestMainPackagesTreatedAsCommands(t *testing.T) {
+
+	tmpDir := copyTestFileToGoPath(t, "bar/docs.go")
+	defer os.RemoveAll(tmpDir)
+
+	res, err := ConvertDocs(tmpDir, &Config{
+		ShowGodocBadge:      false,
+		ShowGeneratedSuffix: false,
+	})
+	require.NoError(t, err)
+
+	// Since this test file was in the main package, the title of the page should
+	// be the directory name.
+	expected := fmt.Sprintf("# %s\n\nHello, World!", path.Base(tmpDir))
+	assert.Equal(t, expected, res)
+}
+
+// copyTestFileToGoPath copies testFile from the testdata directory into a
+// random temporary directory in the GOPATH. The returned string is the
+// directory that was created. The caller should delete it when finished.
+func copyTestFileToGoPath(t *testing.T, testFile string) string {
+
+	tmpDir, err := ioutil.TempDir(path.Join(build.Default.GOPATH, "src"), "goreadme")
+	require.NoError(t, err)
+
+	wd, err := os.Getwd()
+	require.NoError(t, err)
+
+	testFileBytes, err := ioutil.ReadFile(path.Join(wd, "testdata", testFile))
+	require.NoError(t, err)
+
+	err = ioutil.WriteFile(path.Join(tmpDir, path.Base(testFile)),
+		testFileBytes, 0644)
+	require.NoError(t, err)
+
+	return tmpDir
 }

@@ -1,5 +1,5 @@
 # foo
-[![GoDoc](https://godoc.org/github.com/dmjones/goreadme/parse/foo?status.svg)](https://godoc.org/github.com/dmjones/goreadme/parse/foo)
+[![GoDoc](https://godoc.org/%%IMPORT_PATH%%?status.svg)](https://godoc.org/%%IMPORT_PATH%%)
 
 We don't use the 'testdata' package, as this messes up the import paths reported
 by the docs tools.

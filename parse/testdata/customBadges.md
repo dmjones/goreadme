@@ -1,5 +1,5 @@
 # foo
-[![GoDoc](https://godoc.org/github.com/dmjones/goreadme/parse/foo?status.svg)](https://godoc.org/github.com/dmjones/goreadme/parse/foo)
+[![GoDoc](https://godoc.org/%%IMPORT_PATH%%?status.svg)](https://godoc.org/%%IMPORT_PATH%%)
 badge1
 badge2
 
